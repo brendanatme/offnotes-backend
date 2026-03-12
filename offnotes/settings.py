@@ -10,17 +10,25 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file at project root
+from dotenv import load_dotenv
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-lbdl*47p7yh=sa-i#_=bz67$d3@=wrq-0ha7@(owe5o^l!-3ce'
+# read from environment variable loaded from .env
+SECRET_KEY = os.environ.get("SECRET_KEY")
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY environment variable not set")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,14 +48,19 @@ INSTALLED_APPS = [
 
     # local apps
     "notes",
+    "users",
 
     # third party apps
     "rest_framework",
     "rest_framework.authtoken",
     "drf_spectacular",
+    # CORS
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
+    # CORS middleware should be at the top so it can add headers before other middleware
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -141,5 +154,29 @@ SPECTACULAR_SETTINGS = {
     # Include enum descriptions
     "ENUM_ADD_EXPLICIT_BLANK_CHOICE": False,
     # Improve schema formatting
-    "SCHEMA_PATH_PREFIX": "/api/notes/",
+    "SCHEMA_PATH_PREFIX": "/api/",
+    # Configure authentication schemes for Swagger UI
+    "SECURITY": [
+        {
+            "tokenAuth": []
+        }
+    ],
+    "COMPONENTS": {
+        "securitySchemes": {
+            "tokenAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization",
+                "description": "Token-based authentication with `Token` prefix",
+            }
+        }
+    }
 }
+
+# CORS configuration
+# Read frontend domain from environment variable; fall back to localhost dev server.
+CORS_ALLOWED_ORIGINS = [
+    os.environ.get("FRONTEND_DOMAIN", "http://localhost:5173"),
+]
+# backward-compatible alias
+CORS_ORIGIN_WHITELIST = CORS_ALLOWED_ORIGINS

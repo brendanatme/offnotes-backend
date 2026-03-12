@@ -1,6 +1,13 @@
-- data model
-- formatter
-- git
-- api
-- swagger
-- user auth
+- data model √
+- formatter √
+- git √
+- api √
+- swagger √
+- user auth √
+- frontend √
+- sync: folder count √
+- column icons
+- plus button in column √
+- collapsible columns
+- offline (via tanquery)
+- light mode / dark mode support

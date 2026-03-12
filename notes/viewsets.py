@@ -1,35 +1,67 @@
 from rest_framework import viewsets
+from drf_spectacular.utils import extend_schema
 from .models import Folder, Note
 from .serializers import FolderSerializer, NoteSerializer
 
 
+from rest_framework.permissions import IsAuthenticated
+
+
+@extend_schema(
+    tags=['Folders'],
+    operation_id='folders_create',
+)
 class FolderViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing folders.
     
     Provides CRUD operations for folders:
-    - list: Get all folders
-    - create: Create a new folder
+    - list: Get all folders (owned by the requesting user)
+    - create: Create a new folder, automatically assigned to the user
     - retrieve: Get a specific folder with its details
     - update: Update a folder
     - partial_update: Partially update a folder
     - destroy: Delete a folder
+    
+    Requires authentication with a valid token.
     """
-    queryset = Folder.objects.all()
+    permission_classes = [IsAuthenticated]
     serializer_class = FolderSerializer
 
+    def get_queryset(self):
+        # always limit to folders owned by the authenticated user
+        user = self.request.user
+        return Folder.objects.filter(user=user)
 
+    def perform_create(self, serializer):
+        # assign the current user when creating
+        serializer.save(user=self.request.user)
+
+
+@extend_schema(
+    tags=['Notes'],
+    operation_id='notes_create',
+)
 class NoteViewSet(viewsets.ModelViewSet):
     """
     ViewSet for managing notes.
     
     Provides CRUD operations for notes:
-    - list: Get all notes (ordered by date, newest first)
-    - create: Create a new note
+    - list: Get all notes (owned by the requesting user, newest first)
+    - create: Create a new note, assigned to the user
     - retrieve: Get a specific note with its details
     - update: Update a note
     - partial_update: Partially update a note
     - destroy: Delete a note
+    
+    Requires authentication with a valid token.
     """
-    queryset = Note.objects.all().order_by('-date')
+    permission_classes = [IsAuthenticated]
     serializer_class = NoteSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Note.objects.filter(user=user).order_by('-date')
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

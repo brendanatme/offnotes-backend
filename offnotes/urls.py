@@ -21,6 +21,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/notes/', include('notes.urls')),
+    path('api/users/', include('users.urls')),
     
     # Schema endpoints for drf-spectacular
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
