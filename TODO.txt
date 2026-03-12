@@ -6,8 +6,9 @@
 - user auth √
 - frontend √
 - sync: folder count √
-- column icons
+- column icons √
 - plus button in column √
-- collapsible columns
+- collapsible columns √
+- markdown formatting
 - offline (via tanquery)
 - light mode / dark mode support
