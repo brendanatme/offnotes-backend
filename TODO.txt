@@ -9,6 +9,7 @@
 - column icons √
 - plus button in column √
 - collapsible columns √
-- markdown formatting
+- markdown formatting √
 - offline (via tanquery)
 - light mode / dark mode support
+- favicon

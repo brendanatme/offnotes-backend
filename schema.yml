@@ -1,0 +1,1019 @@
+openapi: 3.0.3
+info:
+  title: OffNotes API
+  version: 1.0.0
+  description: API for managing notes and folders
+paths:
+  /api/notes/folders/:
+    get:
+      operationId: folders_create
+      description: |-
+        ViewSet for managing folders.
+
+        Provides CRUD operations for folders:
+        - list: Get all folders (owned by the requesting user)
+        - create: Create a new folder, automatically assigned to the user
+        - retrieve: Get a specific folder with its details
+        - update: Update a folder
+        - partial_update: Partially update a folder
+        - destroy: Delete a folder
+
+        Requires authentication with a valid token.
+      tags:
+      - Folders
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Folder'
+          description: ''
+    post:
+      operationId: folders_create_2
+      description: |-
+        ViewSet for managing folders.
+
+        Provides CRUD operations for folders:
+        - list: Get all folders (owned by the requesting user)
+        - create: Create a new folder, automatically assigned to the user
+        - retrieve: Get a specific folder with its details
+        - update: Update a folder
+        - partial_update: Partially update a folder
+        - destroy: Delete a folder
+
+        Requires authentication with a valid token.
+      tags:
+      - Folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Folder'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+  /api/notes/folders/{id}/:
+    get:
+      operationId: folders_create_4
+      description: |-
+        ViewSet for managing folders.
+
+        Provides CRUD operations for folders:
+        - list: Get all folders (owned by the requesting user)
+        - create: Create a new folder, automatically assigned to the user
+        - retrieve: Get a specific folder with its details
+        - update: Update a folder
+        - partial_update: Partially update a folder
+        - destroy: Delete a folder
+
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+    put:
+      operationId: folders_create_6
+      description: |-
+        ViewSet for managing folders.
+
+        Provides CRUD operations for folders:
+        - list: Get all folders (owned by the requesting user)
+        - create: Create a new folder, automatically assigned to the user
+        - retrieve: Get a specific folder with its details
+        - update: Update a folder
+        - partial_update: Partially update a folder
+        - destroy: Delete a folder
+
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Folder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Folder'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+    patch:
+      operationId: folders_create_5
+      description: |-
+        ViewSet for managing folders.
+
+        Provides CRUD operations for folders:
+        - list: Get all folders (owned by the requesting user)
+        - create: Create a new folder, automatically assigned to the user
+        - retrieve: Get a specific folder with its details
+        - update: Update a folder
+        - partial_update: Partially update a folder
+        - destroy: Delete a folder
+
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedFolder'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedFolder'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedFolder'
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Folder'
+          description: ''
+    delete:
+      operationId: folders_create_3
+      description: |-
+        ViewSet for managing folders.
+
+        Provides CRUD operations for folders:
+        - list: Get all folders (owned by the requesting user)
+        - create: Create a new folder, automatically assigned to the user
+        - retrieve: Get a specific folder with its details
+        - update: Update a folder
+        - partial_update: Partially update a folder
+        - destroy: Delete a folder
+
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Folders
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/notes/notes/:
+    get:
+      operationId: notes_create
+      description: |-
+        ViewSet for managing notes.
+
+        Provides CRUD operations for notes:
+        - list: Get all notes (owned by the requesting user, newest first)
+        - create: Create a new note, assigned to the user
+        - retrieve: Get a specific note with its details
+        - update: Update a note
+        - partial_update: Partially update a note
+        - destroy: Delete a note
+
+        Supports filtering by folder via query parameter.
+        Requires authentication with a valid token.
+      tags:
+      - Notes
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+          description: ''
+    post:
+      operationId: notes_create_2
+      description: |-
+        ViewSet for managing notes.
+
+        Provides CRUD operations for notes:
+        - list: Get all notes (owned by the requesting user, newest first)
+        - create: Create a new note, assigned to the user
+        - retrieve: Get a specific note with its details
+        - update: Update a note
+        - partial_update: Partially update a note
+        - destroy: Delete a note
+
+        Supports filtering by folder via query parameter.
+        Requires authentication with a valid token.
+      tags:
+      - Notes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Note'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Note'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+  /api/notes/notes/{id}/:
+    get:
+      operationId: notes_create_4
+      description: |-
+        ViewSet for managing notes.
+
+        Provides CRUD operations for notes:
+        - list: Get all notes (owned by the requesting user, newest first)
+        - create: Create a new note, assigned to the user
+        - retrieve: Get a specific note with its details
+        - update: Update a note
+        - partial_update: Partially update a note
+        - destroy: Delete a note
+
+        Supports filtering by folder via query parameter.
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Notes
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+    put:
+      operationId: notes_create_6
+      description: |-
+        ViewSet for managing notes.
+
+        Provides CRUD operations for notes:
+        - list: Get all notes (owned by the requesting user, newest first)
+        - create: Create a new note, assigned to the user
+        - retrieve: Get a specific note with its details
+        - update: Update a note
+        - partial_update: Partially update a note
+        - destroy: Delete a note
+
+        Supports filtering by folder via query parameter.
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Notes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Note'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Note'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+    patch:
+      operationId: notes_create_5
+      description: |-
+        ViewSet for managing notes.
+
+        Provides CRUD operations for notes:
+        - list: Get all notes (owned by the requesting user, newest first)
+        - create: Create a new note, assigned to the user
+        - retrieve: Get a specific note with its details
+        - update: Update a note
+        - partial_update: Partially update a note
+        - destroy: Delete a note
+
+        Supports filtering by folder via query parameter.
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Notes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedNote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedNote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedNote'
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Note'
+          description: ''
+    delete:
+      operationId: notes_create_3
+      description: |-
+        ViewSet for managing notes.
+
+        Provides CRUD operations for notes:
+        - list: Get all notes (owned by the requesting user, newest first)
+        - create: Create a new note, assigned to the user
+        - retrieve: Get a specific note with its details
+        - update: Update a note
+        - partial_update: Partially update a note
+        - destroy: Delete a note
+
+        Supports filtering by folder via query parameter.
+        Requires authentication with a valid token.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      tags:
+      - Notes
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/users/login/:
+    post:
+      operationId: users_login_create
+      description: |-
+        User login endpoint.
+
+        Authenticates a user with their username and password, and returns
+        an authentication token for subsequent API requests.
+
+        Accepts:
+        - username (str): The user's username
+        - password (str): The user's password
+
+        Returns:
+        - token (str): The authentication token for subsequent requests
+        - user (dict): The authenticated user's details
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+            examples:
+              LoginRequest:
+                value:
+                  username: john_doe
+                  password: secure_password123
+                summary: Login Request
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Login'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+              examples:
+                LoginRequest:
+                  value:
+                    username: john_doe
+                    password: secure_password123
+                  summary: Login Request
+                LoginResponse:
+                  value:
+                    token: abc123token456
+                    user:
+                      id: 1
+                      username: john_doe
+                      email: john@example.com
+                      first_name: John
+                      last_name: Doe
+                      is_active: true
+                      date_joined: '2024-01-15T10:30:00Z'
+                  summary: Login Response
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                description: Invalid username or password
+          description: ''
+  /api/users/logout/:
+    post:
+      operationId: users_logout_create
+      description: |-
+        User logout endpoint.
+
+        Deletes the user's authentication token, effectively logging them out.
+
+        Requires:
+        - Authentication token in the Authorization header
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: Successfully logged out
+          description: ''
+  /api/users/users/:
+    get:
+      operationId: users_users_list
+      description: |-
+        ViewSet for managing users.
+
+        Provides CRUD operations for users:
+        - list: Get all users
+        - create: Create a new user
+        - retrieve: Get a specific user with their details
+        - update: Update a user
+        - partial_update: Partially update a user
+        - destroy: Delete a user
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: users_users_create
+      description: |-
+        ViewSet for managing users.
+
+        Provides CRUD operations for users:
+        - list: Get all users
+        - create: Create a new user
+        - retrieve: Get a specific user with their details
+        - update: Update a user
+        - partial_update: Partially update a user
+        - destroy: Delete a user
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/users/users/{id}/:
+    get:
+      operationId: users_users_retrieve
+      description: |-
+        ViewSet for managing users.
+
+        Provides CRUD operations for users:
+        - list: Get all users
+        - create: Create a new user
+        - retrieve: Get a specific user with their details
+        - update: Update a user
+        - partial_update: Partially update a user
+        - destroy: Delete a user
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: users_users_update
+      description: |-
+        ViewSet for managing users.
+
+        Provides CRUD operations for users:
+        - list: Get all users
+        - create: Create a new user
+        - retrieve: Get a specific user with their details
+        - update: Update a user
+        - partial_update: Partially update a user
+        - destroy: Delete a user
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_users_partial_update
+      description: |-
+        ViewSet for managing users.
+
+        Provides CRUD operations for users:
+        - list: Get all users
+        - create: Create a new user
+        - retrieve: Get a specific user with their details
+        - update: Update a user
+        - partial_update: Partially update a user
+        - destroy: Delete a user
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: users_users_destroy
+      description: |-
+        ViewSet for managing users.
+
+        Provides CRUD operations for users:
+        - list: Get all users
+        - create: Create a new user
+        - retrieve: Get a specific user with their details
+        - update: Update a user
+        - partial_update: Partially update a user
+        - destroy: Delete a user
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - tokenAuth: []
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Folder:
+      type: object
+      description: |-
+        Serializer for Folder model.
+
+        Fields:
+        - id: Unique identifier (read-only)
+        - name: Folder name
+        - notes_count: Number of notes in the folder (read-only)
+        - created_at: Creation timestamp (read-only)
+        - updated_at: Last update timestamp (read-only)
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: Name of the folder
+          maxLength: 100
+        notes_count:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the folder was created
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the folder was last updated
+      required:
+      - created_at
+      - id
+      - name
+      - notes_count
+      - updated_at
+    Login:
+      type: object
+      description: |-
+        Serializer for user login.
+
+        Authenticates a user with username and password,
+        and returns the authentication token.
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+      required:
+      - password
+      - token
+      - user
+      - username
+    Note:
+      type: object
+      description: |-
+        Serializer for Note model.
+
+        Fields:
+        - id: Unique identifier (read-only)
+        - folder: Foreign key to the parent folder
+        - title: Note title
+        - date: Date of the note
+        - content: Full content of the note
+        - created_at: Creation timestamp (read-only)
+        - updated_at: Last update timestamp (read-only)
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        folder:
+          type: integer
+          description: The folder this note belongs to
+        title:
+          type: string
+          description: Title of the note
+          maxLength: 200
+        date:
+          type: string
+          format: date
+          nullable: true
+          description: Date associated with the note
+        content:
+          type: string
+          description: Full content/body of the note
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the note was created
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the note was last updated
+      required:
+      - content
+      - created_at
+      - folder
+      - id
+      - title
+      - updated_at
+    PatchedFolder:
+      type: object
+      description: |-
+        Serializer for Folder model.
+
+        Fields:
+        - id: Unique identifier (read-only)
+        - name: Folder name
+        - notes_count: Number of notes in the folder (read-only)
+        - created_at: Creation timestamp (read-only)
+        - updated_at: Last update timestamp (read-only)
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          description: Name of the folder
+          maxLength: 100
+        notes_count:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the folder was created
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the folder was last updated
+    PatchedNote:
+      type: object
+      description: |-
+        Serializer for Note model.
+
+        Fields:
+        - id: Unique identifier (read-only)
+        - folder: Foreign key to the parent folder
+        - title: Note title
+        - date: Date of the note
+        - content: Full content of the note
+        - created_at: Creation timestamp (read-only)
+        - updated_at: Last update timestamp (read-only)
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        folder:
+          type: integer
+          description: The folder this note belongs to
+        title:
+          type: string
+          description: Title of the note
+          maxLength: 200
+        date:
+          type: string
+          format: date
+          nullable: true
+          description: Date associated with the note
+        content:
+          type: string
+          description: Full content/body of the note
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the note was created
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Timestamp when the note was last updated
+    PatchedUser:
+      type: object
+      description: |-
+        Serializer for the User model.
+
+        Provides a structured representation of user data for API responses.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+    User:
+      type: object
+      description: |-
+        Serializer for the User model.
+
+        Provides a structured representation of user data for API responses.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          title: Email address
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        is_active:
+          type: boolean
+          title: Active
+          description: Designates whether this user should be treated as active. Unselect
+            this instead of deleting accounts.
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - date_joined
+      - id
+      - password
+      - username
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

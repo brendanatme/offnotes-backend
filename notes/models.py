@@ -42,7 +42,7 @@ class Note(models.Model):
 
     title = models.CharField(max_length=200, help_text="Title of the note")
     date = models.DateField(
-        help_text="Date associated with the note", auto_now_add=True
+        help_text="Date associated with the note", blank=True, null=True
     )
     content = models.TextField(help_text="Full content/body of the note")
     created_at = models.DateTimeField(

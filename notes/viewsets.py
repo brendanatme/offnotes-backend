@@ -1,7 +1,11 @@
 from rest_framework import viewsets
 from drf_spectacular.utils import extend_schema
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+
 from .models import Folder, Note
 from .serializers import FolderSerializer, NoteSerializer
+from .filters import NoteFilter
 
 
 from rest_framework.permissions import IsAuthenticated
@@ -37,6 +41,10 @@ class FolderViewSet(viewsets.ModelViewSet):
         # assign the current user when creating
         serializer.save(user=self.request.user)
 
+    def perform_update(self, serializer):
+        # save the updated instance
+        serializer.save()
+
 
 @extend_schema(
     tags=['Notes'],
@@ -54,10 +62,13 @@ class NoteViewSet(viewsets.ModelViewSet):
     - partial_update: Partially update a note
     - destroy: Delete a note
     
+    Supports filtering by folder via query parameter.
     Requires authentication with a valid token.
     """
     permission_classes = [IsAuthenticated]
     serializer_class = NoteSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = NoteFilter
 
     def get_queryset(self):
         user = self.request.user
@@ -65,3 +76,6 @@ class NoteViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save()
