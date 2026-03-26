@@ -32,7 +32,7 @@ if not SECRET_KEY:
     raise ValueError("SECRET_KEY environment variable not set")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "t")
 
 ALLOWED_HOSTS = ["offnotes-backend.onrender.com"]
 
