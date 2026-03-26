@@ -10,6 +10,13 @@
 - plus button in column √
 - collapsible columns √
 - markdown formatting √
-- offline (via tanquery)
-- light mode / dark mode support
-- favicon
+- light mode / dark mode support √
+- query refactor √
+- logo √
+- offline (via tanquery) √
+- favicon √
+- fix offline bugs √
+- check online/offline in router x
+- mobile layout √
+- color scheme √
+- fix offline favicon bug

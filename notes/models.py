@@ -44,7 +44,7 @@ class Note(models.Model):
     date = models.DateField(
         help_text="Date associated with the note", blank=True, null=True
     )
-    content = models.TextField(help_text="Full content/body of the note")
+    content = models.TextField(help_text="Full content/body of the note", blank=True, default="")
     created_at = models.DateTimeField(
         auto_now_add=True, help_text="Timestamp when the note was created"
     )
