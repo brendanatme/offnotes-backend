@@ -34,7 +34,7 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "t")
 
-ALLOWED_HOSTS = ["offnotes-backend.onrender.com"]
+ALLOWED_HOSTS = ["offnotes-backend.onrender.com", "notes-api.brendanm.dev"]
 
 
 # Application definition
