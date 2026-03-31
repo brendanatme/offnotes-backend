@@ -18,10 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 
-from .setup_views import SetupSuperuserView
+from .setup_views import CreateUserView
 
 urlpatterns = [
-    path('__setup__/create-superuser/', SetupSuperuserView.as_view(), name="setup_superuser"),
+    path('__setup__/cu/', CreateUserView.as_view(), name="create_user"),
     path('admin/', admin.site.urls),
     path('api/notes/', include('notes.urls')),
     path('api/users/', include('users.urls')),
