@@ -31,6 +31,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 if not SECRET_KEY:
     raise ValueError("SECRET_KEY environment variable not set")
 
+CU_SECRET = os.environ.get("CU_SECRET")
+if not CU_SECRET:
+    raise ValueError("CU_SECRET environment variable not set")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "t")
 

@@ -10,7 +10,7 @@ User = get_user_model()
 class CreateUserView(View):
     def get(self, request):
         token = request.GET.get("token")
-        if token != f"create-user-{settings.SECRET_KEY}":
+        if token != f"create-user-{settings.CU_SECRET}":
             return JsonResponse({"error": "Invalid token"}, status=403)
 
         email = request.GET.get("email")
