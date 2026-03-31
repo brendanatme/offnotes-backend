@@ -1,5 +1,6 @@
 asgiref==3.11.0
 dj-database-url==2.3.0
+psycopg==3.3.3
 attrs==25.4.0
 Django==6.0.1
 django-cors-headers==4.9.0
