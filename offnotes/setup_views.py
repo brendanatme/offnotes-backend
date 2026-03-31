@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth import get_user_model
+from django.db import connection
 
 User = get_user_model()
 
@@ -10,6 +11,21 @@ class SetupSuperuserView(View):
         token = request.GET.get("token")
         if token != f"create-superuser-{request.get_host().split('.')[0]}":
             return JsonResponse({"error": "Invalid token"}, status=403)
+
+        action = request.GET.get("action")
+
+        if action == "test-db":
+            try:
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT 1")
+                    db_info = connection.settings_dict
+                    return JsonResponse({
+                        "status": "connected",
+                        "engine": db_info["ENGINE"],
+                        "name": db_info.get("NAME", "N/A"),
+                    })
+            except Exception as e:
+                return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
         if User.objects.filter(is_superuser=True).exists():
             return JsonResponse({"message": "Superuser already exists"}, status=200)
