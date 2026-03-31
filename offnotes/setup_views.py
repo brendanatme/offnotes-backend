@@ -39,5 +39,5 @@ class SetupSuperuserView(View):
         if User.objects.filter(email=email).exists():
             return JsonResponse({"error": "User with this email already exists"}, status=400)
 
-        user = User.objects.create_superuser(email=email, password=password)
+        user = User.objects.create_superuser(email, email=email, password=password)
         return JsonResponse({"message": f"Superuser created: {user.email}"}, status=201)
