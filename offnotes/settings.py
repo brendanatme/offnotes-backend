@@ -40,6 +40,9 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in ("true", "1", "t")
 
 ALLOWED_HOSTS = ["offnotes-backend.onrender.com", "notes-api.brendanm.dev"]
 
+ALLOWED_HOST = os.environ.get("ALLOWED_HOST")
+if ALLOWED_HOST:
+    ALLOWED_HOSTS.append(ALLOWED_HOST)
 
 # Application definition
 
