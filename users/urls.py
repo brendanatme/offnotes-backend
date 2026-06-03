@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .viewsets import UserViewSet
-from .views import login, logout
+from .views import login, logout, signup
 
 # Create a router and register the viewsets
 router = DefaultRouter()
@@ -12,4 +12,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
+    path('signup/', signup, name='signup'),
 ]

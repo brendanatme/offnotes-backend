@@ -1,9 +1,10 @@
+from django.conf import settings
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiExample
-from .serializers import LoginSerializer, LogoutSerializer
+from .serializers import LoginSerializer, LogoutSerializer, SignupSerializer
 
 
 @extend_schema(
@@ -94,3 +95,74 @@ def logout(request):
             {'error': str(e)},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+
+
+@extend_schema(
+    request=SignupSerializer,
+    responses={
+        201: SignupSerializer,
+        400: {'description': 'Validation error'},
+        403: {'description': 'Signup is disabled'},
+    },
+    examples=[
+        OpenApiExample(
+            'Signup Request',
+            value={
+                'username': 'john_doe',
+                'email': 'john@example.com',
+                'password': 'secure_password123',
+            }
+        ),
+        OpenApiExample(
+            'Signup Response',
+            value={
+                'token': 'abc123token456',
+                'user': {
+                    'id': 1,
+                    'username': 'john_doe',
+                    'email': 'john@example.com',
+                    'first_name': '',
+                    'last_name': '',
+                    'is_active': True,
+                    'date_joined': '2024-01-15T10:30:00Z',
+                }
+            },
+            response_only=True
+        ),
+    ]
+)
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def signup(request):
+    """
+    User signup endpoint.
+
+    Creates a new user account and returns an authentication token.
+    Disabled unless the SIGNUP_ENABLED environment variable is set to true.
+
+    Accepts:
+    - username (str): The desired username
+    - email (str): The user's email address
+    - password (str): The desired password (validated against AUTH_PASSWORD_VALIDATORS)
+
+    Returns:
+    - token (str): The authentication token for subsequent requests
+    - user (dict): The newly created user's details
+    """
+    if not settings.SIGNUP_ENABLED:
+        return Response(
+            {'error': 'Signup is currently disabled.'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+
+    serializer = SignupSerializer(data=request.data)
+    if serializer.is_valid():
+        result = serializer.save()
+        return Response(
+            {
+                'token': result['token'],
+                'user': SignupSerializer(serializer.validated_data).data,
+            },
+            status=status.HTTP_201_CREATED
+        )
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

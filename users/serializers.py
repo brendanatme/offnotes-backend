@@ -94,6 +94,43 @@ class LoginSerializer(serializers.Serializer):
         }
 
 
+class SignupSerializer(serializers.Serializer):
+    """
+    Serializer for user signup.
+
+    Creates a new user account and returns an authentication token.
+    """
+    username = serializers.CharField()
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    token = serializers.CharField(read_only=True)
+    user = UserSerializer(read_only=True)
+
+    def validate_username(self, value):
+        if User.objects.filter(username=value).exists():
+            raise serializers.ValidationError("A user with that username already exists.")
+        return value
+
+    def validate_email(self, value):
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with that email already exists.")
+        return value
+
+    def validate_password(self, value):
+        from django.contrib.auth.password_validation import validate_password
+        validate_password(value)
+        return value
+
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password'],
+        )
+        token, _ = Token.objects.get_or_create(user=user)
+        return {'token': token.key, 'user': user}
+
+
 class LogoutSerializer(serializers.Serializer):
     """
     Serializer for user logout.

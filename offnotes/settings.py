@@ -190,6 +190,9 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
+# Feature flags
+SIGNUP_ENABLED = os.environ.get("SIGNUP_ENABLED", "False").lower() in ("true", "1", "t")
+
 # CORS configuration
 # Read frontend domain from environment variable; fall back to localhost dev server.
 CORS_ALLOWED_ORIGINS = [
