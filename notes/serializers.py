@@ -50,8 +50,9 @@ class NoteSerializer(serializers.ModelSerializer):
             "content",
             "created_at",
             "updated_at",
+            "latest_commit",
         ]
-        read_only_fields = ["id", "created_at", "updated_at"]
+        read_only_fields = ["id", "created_at", "updated_at", "latest_commit"]
 
     def validate_folder(self, value):
         """Ensure the folder belongs to the authenticated user."""

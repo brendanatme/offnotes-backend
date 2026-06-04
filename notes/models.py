@@ -52,5 +52,11 @@ class Note(models.Model):
         auto_now=True, help_text="Timestamp when the note was last updated"
     )
 
+    latest_commit = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        self.latest_commit += 1
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.title
