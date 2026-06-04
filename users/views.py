@@ -102,7 +102,7 @@ def logout(request):
     responses={
         201: SignupSerializer,
         400: {'description': 'Validation error'},
-        403: {'description': 'Signup is disabled'},
+        404: {'description': 'Signup is disabled'},
     },
     examples=[
         OpenApiExample(
@@ -151,8 +151,8 @@ def signup(request):
     """
     if not settings.SIGNUP_ENABLED:
         return Response(
-            {'error': 'Signup is currently disabled.'},
-            status=status.HTTP_403_FORBIDDEN
+            {'error': 'Not found'},
+            status=status.HTTP_404_NOT_FOUND
         )
 
     serializer = SignupSerializer(data=request.data)
