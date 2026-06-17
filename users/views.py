@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiExample
-from .serializers import LoginSerializer, LogoutSerializer, SignupSerializer
+from .serializers import LoginSerializer, LogoutSerializer, SignupSerializer, UserSerializer
 
 
 @extend_schema(
@@ -62,7 +62,7 @@ def login(request):
         return Response(
             {
                 'token': result['token'],
-                'user': LoginSerializer(serializer.validated_data).data,
+                'user': UserSerializer(result['user']).data,
             },
             status=status.HTTP_200_OK
         )
@@ -161,7 +161,7 @@ def signup(request):
         return Response(
             {
                 'token': result['token'],
-                'user': SignupSerializer(serializer.validated_data).data,
+                'user': UserSerializer(result['user']).data,
             },
             status=status.HTTP_201_CREATED
         )

@@ -18,8 +18,8 @@ class FolderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Folder
-        fields = ["id", "name", "notes_count", "created_at", "updated_at"]
-        read_only_fields = ["id", "created_at", "updated_at"]
+        fields = ["id", "user_id", "name", "notes_count", "created_at", "updated_at"]
+        read_only_fields = ["id", "user_id", "created_at", "updated_at"]
 
     @extend_schema_field(serializers.IntegerField())
     def get_notes_count(self, obj) -> int:
@@ -44,6 +44,7 @@ class NoteSerializer(serializers.ModelSerializer):
         model = Note
         fields = [
             "id",
+            "user_id",
             "folder",
             "title",
             "date",
@@ -52,7 +53,7 @@ class NoteSerializer(serializers.ModelSerializer):
             "updated_at",
             "latest_commit",
         ]
-        read_only_fields = ["id", "created_at", "updated_at", "latest_commit"]
+        read_only_fields = ["id", "user_id", "created_at", "updated_at", "latest_commit"]
 
     def validate_folder(self, value):
         """Ensure the folder belongs to the authenticated user."""
